@@ -189,6 +189,22 @@ p { margin: 0; }
 .booker[data-mode="regalar"] .book-only { display: none; }
 .booker[data-mode="regalar"] .gift-preview { display: grid; }
 
+/* Foto del hero y recuadro de reserva debajo */
+.hero-photo { margin: 0; min-width: 0; display: grid; gap: 10px; }
+.hero-photo img {
+  display: block; width: 100%; max-width: 100%; height: auto;
+  aspect-ratio: 5 / 4; object-fit: cover; object-position: 55% 40%;
+  border-radius: 20px; border: 1px solid var(--line);
+  box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--accent) 35%, transparent), 0 0 0 6px var(--surface);
+}
+.hero-photo figcaption { font-size: 12px; color: var(--muted); text-align: right; }
+.hero .booking-row { display: block; margin-top: 56px; }
+.booking-row .booker { max-width: 640px; margin-inline: auto; }
+@media (max-width: 640px) {
+  .hero-photo img { aspect-ratio: 4 / 3; }
+  .hero .booking-row { margin-top: 40px; }
+}
+
 /* Ticker */
 .ticker { border-block: 1px solid var(--line); background: var(--surface); overflow: hidden; }
 .ticker-inner { display: flex; align-items: center; gap: 20px; padding-block: 18px; }
@@ -373,6 +389,12 @@ footer .addr { font-family: var(--font-mono); }
         <p class="trust"><span class="stars" aria-hidden="true">★★★★★</span> 4,9 de puntuación promedio <span class="rev">[REVISAR]</span> · Para CABA y alrededores</p>
       </div>
 
+      <figure class="hero-photo">
+        <img src="img/hero-serena.jpg" width="1200" height="817" alt="Una mujer con bata blanca y toalla en el pelo toma un té en un sillón del spa">
+        <figcaption>Foto: Usen Parmanov en Unsplash</figcaption>
+      </figure>
+    </div>
+    <div class="wrap booking-row">
       <div class="booker" id="reservar" data-mode="reservar">
         <div class="booker-head">
           <div class="tabs" role="tablist" aria-label="Modo">
