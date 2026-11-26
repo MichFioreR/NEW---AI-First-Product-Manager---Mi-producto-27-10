@@ -1,1 +1,1 @@
-Caso compartido del AFPM. El brief del producto se entrega en clase.
+Serena Spa & Wellness: una web para descubrir tratamientos de spa y estética, ver horarios disponibles y reservar o regalar una experiencia en pocos pasos, para personas de 25 a 55 años de CABA y alrededores que buscan relajarse, cuidarse o hacer un regalo. El producto nace como la web de un único spa y está pensado para crecer después a una red de locales y, más adelante, convertirse en un SaaS para otros spas.

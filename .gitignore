@@ -20,3 +20,6 @@ Thumbs.db
 *.tmp
 *.log
 ~$*
+
+# Windows: configuración de carpeta
+desktop.ini

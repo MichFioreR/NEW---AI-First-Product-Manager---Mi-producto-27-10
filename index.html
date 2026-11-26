@@ -1,0 +1,730 @@
+<title>Serena Spa & Wellness</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400&family=Figtree:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: estructura de homepage SaaS (nav fija, hero dividido con widget vivo, bento, carrusel, cifras, reseñas, novedades, CTA) en un blanco mineral con verde eucalipto */
+:root {
+  --bg: #fbfcfb;
+  --surface: #f2f5f3;
+  --card: #ffffff;
+  --line: #e1e7e3;
+  --fg: #141a17;
+  --muted: #66736c;
+  --accent: #2f7a5c;
+  --accent-soft: #e3f0e9;
+  --ink: #141a17;
+  --ink-fg: #ffffff;
+  --water: #d9e8ee;
+  --clay: #efe2d6;
+  --stone: #e4e2ef;
+  --flag: #8a4b00;
+  --flag-bg: #fdf0d9;
+  --font-display: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --radius: 14px;
+  --max: 1160px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1412; --surface: #151c19; --card: #19211d; --line: #27322d;
+    --fg: #e8eeea; --muted: #94a39b; --accent: #6cc39c; --accent-soft: #1d3329;
+    --ink: #e8eeea; --ink-fg: #0f1412;
+    --water: #1b2b31; --clay: #2d241d; --stone: #23222e;
+    --flag: #f2b866; --flag-bg: #3a2a12;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1412; --surface: #151c19; --card: #19211d; --line: #27322d;
+  --fg: #e8eeea; --muted: #94a39b; --accent: #6cc39c; --accent-soft: #1d3329;
+  --ink: #e8eeea; --ink-fg: #0f1412;
+  --water: #1b2b31; --clay: #2d241d; --stone: #23222e;
+  --flag: #f2b866; --flag-bg: #3a2a12;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg);
+}
+a { color: inherit; text-decoration: none; }
+h1, h2, h3 { margin: 0; text-wrap: balance; font-weight: 500; }
+p { margin: 0; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+
+/* Botones */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: 600 15px/1 var(--font-body);
+  padding: 12px 16px; border-radius: 8px;
+  border: 1px solid transparent; cursor: pointer;
+  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn-ink { background: var(--ink); color: var(--ink-fg); }
+.btn-ink:hover { opacity: .9; }
+.btn-ghost { background: var(--card); color: var(--fg); border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--muted); }
+.btn svg { width: 16px; height: 16px; flex: none; }
+.chev { width: 12px; height: 12px; }
+
+/* Marcas de contenido a revisar */
+.rev {
+  display: inline-block; vertical-align: middle;
+  font: 500 10px/1 var(--font-mono); letter-spacing: .04em; font-style: normal;
+  color: var(--flag); background: var(--flag-bg);
+  padding: 3px 5px; border-radius: 4px; white-space: nowrap; margin-left: 4px;
+}
+.proto-bar { background: var(--flag-bg); color: var(--flag); font-size: 13px; }
+.proto-bar .wrap { padding-block: 8px; }
+.proto-bar .rev { background: var(--bg); margin: 0 2px; }
+
+/* Nav */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.logo { display: flex; align-items: center; gap: 8px; font: 600 20px/1 var(--font-body); letter-spacing: -.02em; }
+.logo svg { width: 22px; height: 22px; color: var(--accent); }
+.nav-links { display: flex; gap: 28px; font-size: 15px; font-weight: 500; }
+.nav-links a { display: inline-flex; align-items: center; gap: 4px; color: var(--fg); }
+.nav-links a:hover { color: var(--accent); }
+.nav-cta { display: flex; gap: 8px; }
+.nav-cta .btn { padding: 9px 14px; font-size: 14px; }
+
+/* Hero */
+.hero { padding-block: 64px 72px; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 56px; align-items: center; }
+.badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  border: 1px solid var(--line); background: var(--card);
+  padding: 5px 8px 5px 10px; border-radius: 8px; font-size: 13px; color: var(--muted);
+}
+.badge b {
+  font: 500 13px/1 var(--font-mono); color: var(--accent);
+  background: var(--accent-soft); padding: 4px 6px; border-radius: 5px;
+  font-variant-numeric: tabular-nums;
+}
+.badge .chev { color: var(--accent); }
+.hero h1 {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(44px, 6.2vw, 76px); line-height: 1.02; letter-spacing: -.025em;
+  margin-block: 24px 20px;
+}
+.hero h1 em { font-style: italic; color: var(--accent); }
+.lede { font-size: 19px; color: var(--muted); max-width: 30ch; }
+.lede strong { color: var(--fg); font-weight: 500; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+.trust { margin-top: 28px; font-size: 14px; color: var(--muted); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.trust .stars { color: var(--accent); letter-spacing: 2px; }
+
+/* Widget de reserva */
+.booker {
+  background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+  box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--accent) 35%, transparent), 0 0 0 6px var(--surface);
+  overflow: hidden; min-width: 0;
+}
+.booker-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--line); gap: 12px; }
+.tabs { display: flex; gap: 4px; background: var(--surface); padding: 3px; border-radius: 8px; }
+.tabs button {
+  font: 500 13px/1 var(--font-body); color: var(--muted);
+  background: none; border: 0; padding: 8px 12px; border-radius: 6px; cursor: pointer;
+}
+.tabs button[aria-selected="true"] { background: var(--card); color: var(--fg); box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
+.where { font-size: 13px; color: var(--muted); }
+.booker-body { padding: 18px; display: grid; gap: 18px; }
+.treat { display: flex; gap: 14px; align-items: center; }
+.treat-img { width: 64px; height: 64px; border-radius: 12px; background: var(--water); flex: none; display: grid; place-items: center; color: var(--accent); }
+.treat-img svg { width: 30px; height: 30px; }
+.treat h3 { font-size: 17px; font-weight: 600; }
+.meta { font: 400 13px/1.4 var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.label { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; margin-bottom: 8px; }
+.days, .slots { display: flex; gap: 8px; flex-wrap: wrap; }
+.day, .slot {
+  border: 1px solid var(--line); background: var(--card); color: var(--fg);
+  border-radius: 10px; cursor: pointer; font-family: var(--font-body);
+  transition: border-color .15s, background .15s;
+}
+.day { padding: 8px 0; width: 56px; text-align: center; font-size: 12px; color: var(--muted); }
+.day b { display: block; font: 500 18px/1.2 var(--font-mono); color: var(--fg); }
+.slot { padding: 9px 12px; font: 500 14px/1 var(--font-mono); font-variant-numeric: tabular-nums; }
+.slot[disabled] { color: var(--muted); text-decoration: line-through; opacity: .5; cursor: not-allowed; }
+.day:hover, .slot:not([disabled]):hover { border-color: var(--accent); }
+.day[aria-pressed="true"], .slot[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.day[aria-pressed="true"] b { color: var(--accent); }
+.booker-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 18px; border-top: 1px solid var(--line); background: var(--surface); flex-wrap: wrap; }
+.price { font: 500 20px/1 var(--font-mono); font-variant-numeric: tabular-nums; }
+.price small { font: 400 12px var(--font-body); color: var(--muted); display: block; margin-top: 4px; }
+.gift-preview { display: none; gap: 12px; }
+.gift-card {
+  border-radius: 14px; padding: 18px; aspect-ratio: 1.7; max-width: 100%;
+  background: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 60%, var(--water)) 100%);
+  color: #fff; display: flex; flex-direction: column; justify-content: space-between;
+}
+.gift-card .code { font: 500 13px var(--font-mono); letter-spacing: .12em; opacity: .9; }
+.gift-card .amt { font: 300 34px/1 var(--font-display); }
+.amounts { display: flex; gap: 8px; flex-wrap: wrap; }
+.booker[data-mode="regalar"] .book-only { display: none; }
+.booker[data-mode="regalar"] .gift-preview { display: grid; }
+
+/* Ticker */
+.ticker { border-block: 1px solid var(--line); background: var(--surface); overflow: hidden; }
+.ticker-inner { display: flex; align-items: center; gap: 20px; padding-block: 18px; }
+.ticker-title { font-size: 13px; font-weight: 600; white-space: nowrap; display: flex; align-items: center; gap: 8px; flex: none; }
+.pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 var(--accent); animation: pulse 2s infinite; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 8px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+.marquee { overflow: hidden; flex: 1; min-width: 0; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.track { display: flex; gap: 48px; width: max-content; animation: slide 40s linear infinite; }
+.track div { white-space: nowrap; font-size: 14px; color: var(--muted); }
+.track b { font: 500 15px var(--font-mono); color: var(--fg); margin-left: 8px; font-variant-numeric: tabular-nums; }
+@keyframes slide { to { transform: translateX(-50%); } }
+.example-note { font-size: 11px; color: var(--muted); white-space: nowrap; flex: none; }
+
+/* Secciones */
+section.block { padding-block: 96px 0; }
+.sec-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+.sec-head h2 { font-size: clamp(28px, 3.4vw, 40px); line-height: 1.15; letter-spacing: -.02em; max-width: 22ch; }
+.sec-head h2 span { color: var(--muted); display: block; }
+
+/* Bento */
+.bento { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.tile {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 24px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; min-height: 280px; min-width: 0;
+}
+.tile.wide { grid-column: span 2; }
+.tile h3 { font-size: 17px; font-weight: 600; }
+.tile p { font-size: 14px; color: var(--muted); margin-top: 4px; max-width: 40ch; }
+.vis { flex: 1; display: grid; place-items: center; }
+.mini { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font-size: 13px; display: flex; align-items: center; gap: 10px; }
+.mini .dot { width: 26px; height: 26px; border-radius: 7px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; flex: none; }
+.mini .dot svg { width: 14px; height: 14px; }
+.stack { display: grid; gap: 8px; width: 100%; max-width: 360px; }
+.stack .mini:nth-child(2) { margin-left: 24px; border-color: var(--accent); }
+.stack .mini:nth-child(3) { margin-left: 8px; opacity: .6; }
+.mini .tag { margin-left: auto; font: 500 12px var(--font-mono); color: var(--muted); }
+.grid-slots { display: grid; grid-template-columns: repeat(4, auto); gap: 6px; }
+.grid-slots span { font: 500 12px var(--font-mono); padding: 6px 8px; border-radius: 6px; background: var(--card); border: 1px solid var(--line); text-align: center; }
+.grid-slots .on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.grid-slots .off { opacity: .4; text-decoration: line-through; }
+.phone-msg { max-width: 260px; display: grid; gap: 8px; }
+.bubble { background: var(--card); border: 1px solid var(--line); border-radius: 12px 12px 12px 4px; padding: 10px 12px; font-size: 13px; }
+.bubble.me { background: var(--accent); color: #fff; border-color: transparent; border-radius: 12px 12px 4px 12px; justify-self: end; }
+.avatars { display: flex; }
+.avatars span { width: 44px; height: 44px; border-radius: 50%; border: 3px solid var(--surface); margin-left: -10px; display: grid; place-items: center; font-weight: 600; font-size: 14px; }
+.avatars span:first-child { margin-left: 0; }
+
+/* Carrusel */
+.carousel-ctrl { display: flex; gap: 8px; align-items: center; }
+.icon-btn { width: 38px; height: 38px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--fg); display: grid; place-items: center; cursor: pointer; }
+.icon-btn:hover { border-color: var(--muted); }
+.icon-btn svg { width: 14px; height: 14px; }
+.rail { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(300px, 46%); gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
+.rail::-webkit-scrollbar { display: none; }
+.exp {
+  scroll-snap-align: start; border-radius: 18px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; min-height: 340px;
+  border: 1px solid var(--line);
+}
+.exp-txt { padding: 28px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; }
+.exp .kicker { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; opacity: .7; }
+.exp h3 { font: 400 26px/1.15 var(--font-display); margin-top: 10px; }
+.exp-stats { display: flex; gap: 24px; }
+.exp-stats b { display: block; font: 400 30px/1 var(--font-display); }
+.exp-stats small { font-size: 12px; opacity: .7; }
+.exp-link { font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+.exp-art { position: relative; }
+.exp-art canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.exp.c1 { background: var(--water); }
+.exp.c2 { background: var(--clay); }
+.exp.c3 { background: var(--stone); }
+.exp.c4 { background: var(--accent-soft); }
+
+/* Cifras */
+.figures { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.figure { padding: 28px 24px 0; border-left: 1px solid var(--line); display: grid; gap: 8px; }
+.figure:first-child { border-left: 0; padding-left: 0; }
+.figure svg { width: 18px; height: 18px; color: var(--muted); }
+.figure b { font: 300 48px/1 var(--font-display); letter-spacing: -.02em; }
+.figure span { font-size: 14px; color: var(--muted); }
+.roadmap { margin-top: 40px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 14px; }
+.step { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 6px 14px 6px 6px; }
+.step i { font: 500 12px var(--font-mono); font-style: normal; background: var(--surface); border-radius: 999px; padding: 4px 8px; color: var(--muted); }
+.step.now { border-color: var(--accent); }
+.step.now i { background: var(--accent); color: #fff; }
+.arrow { color: var(--muted); }
+
+/* Reseñas */
+.reviews { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+.reviews .track { gap: 16px; animation-duration: 60s; }
+.reviews:hover .track { animation-play-state: paused; }
+.review { width: 340px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; gap: 16px; white-space: normal; }
+.review p { font-size: 15px; color: var(--fg); }
+.who { display: flex; align-items: center; gap: 10px; }
+.who span.av { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-weight: 600; font-size: 13px; flex: none; }
+.who b { font-size: 14px; display: block; }
+.who small { font-size: 12px; color: var(--muted); }
+
+/* Novedades */
+.posts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.post { border-top: 1px solid var(--line); padding-top: 18px; display: grid; gap: 10px; }
+.post .pmeta { display: flex; gap: 12px; font-size: 12px; color: var(--muted); }
+.post .pmeta b { color: var(--accent); font-weight: 600; }
+.post h3 { font-size: 18px; font-weight: 500; line-height: 1.3; }
+.post:hover h3 { color: var(--accent); }
+
+/* CTA final */
+.final { margin-top: 112px; border-top: 1px solid var(--line); background: var(--surface); }
+.final .wrap { padding-block: 96px; text-align: center; display: grid; justify-items: center; gap: 28px; }
+.final h2 { font: 300 clamp(36px, 5vw, 60px)/1.05 var(--font-display); letter-spacing: -.02em; max-width: 16ch; }
+.final h2 em { color: var(--accent); }
+.final .row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+footer .wrap { padding-block: 32px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+footer .addr { font-family: var(--font-mono); }
+
+@media (max-width: 960px) {
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .nav-links { display: none; }
+  .bento { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .tile.wide { grid-column: span 2; }
+  .rail { grid-auto-columns: minmax(280px, 80%); }
+}
+@media (max-width: 640px) {
+  .hero { padding-block: 40px 56px; }
+  .bento, .posts, .figures { grid-template-columns: minmax(0, 1fr); }
+  .tile.wide { grid-column: auto; }
+  .figure, .figure:first-child { border-left: 0; padding-left: 0; border-bottom: 1px solid var(--line); padding-block: 24px; }
+  .exp { grid-template-columns: minmax(0, 1fr); }
+  .exp-art { min-height: 140px; order: -1; }
+  .rail { grid-auto-columns: 86%; }
+  .nav-cta .btn-ghost { display: none; }
+  .example-note { display: none; }
+  section.block { padding-block: 72px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .track { animation: none; }
+  .pulse { animation: none; }
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-chev" viewBox="0 0 12 12"><path d="M4.5 2.5 8 6l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-down" viewBox="0 0 12 12"><path d="M3 4.5 6 7.5l3-3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 19 13 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12M12 8S10.5 3.5 8 4.5 9 8 12 8Zm0 0s1.5-4.5 4-3.5S15 8 12 8Z"/></g></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></g></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15L6 16Zm4 4h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h3"/></g></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></g></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div class="proto-bar"><div class="wrap">Prototipo. Lo marcado con <span class="rev">[REVISAR]</span> es contenido inventado para completar la página y hay que validarlo con el spa.</div></div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top"><svg><use href="#i-leaf"/></svg>serena</a>
+    <nav class="nav-links" aria-label="Principal">
+      <a href="#tratamientos">Tratamientos <svg class="chev"><use href="#i-down"/></svg></a>
+      <a href="#regalos">Regalos <svg class="chev"><use href="#i-down"/></svg></a>
+      <a href="#horarios">Horarios</a>
+      <a href="#precios">Precios</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="#">Mis reservas</a>
+      <a class="btn btn-ink" href="#reservar">Reservar</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <a class="badge" href="#horarios">Turnos libres hoy <b id="free-count">14</b><svg class="chev"><use href="#i-chev"/></svg><span class="rev">[REVISAR]</span></a>
+        <h1>Relajarte, cuidarte o regalar, <em>en pocos pasos</em></h1>
+        <p class="lede">Descubrí tratamientos de <strong>spa</strong> y <strong>estética</strong>, mirá los horarios disponibles y reservá o regalá una experiencia sin vueltas.</p>
+        <div class="hero-actions">
+          <a class="btn btn-ink" href="#reservar">Reservar turno <svg class="chev"><use href="#i-chev"/></svg></a>
+          <a class="btn btn-ghost" href="#regalos"><svg><use href="#i-gift"/></svg>Regalar una experiencia</a>
+        </div>
+        <p class="trust"><span class="stars" aria-hidden="true">★★★★★</span> 4,9 de puntuación promedio <span class="rev">[REVISAR]</span> · Para CABA y alrededores</p>
+      </div>
+
+      <div class="booker" id="reservar" data-mode="reservar">
+        <div class="booker-head">
+          <div class="tabs" role="tablist" aria-label="Modo">
+            <button role="tab" aria-selected="true" data-mode="reservar" id="tab-reservar">Reservar</button>
+            <button role="tab" aria-selected="false" data-mode="regalar" id="tab-regalar">Regalar</button>
+          </div>
+          <span class="where">Serena Palermo <span class="rev">[REVISAR]</span></span>
+        </div>
+        <div class="booker-body">
+          <div class="treat">
+            <div class="treat-img"><svg><use href="#i-leaf"/></svg></div>
+            <div>
+              <h3>Masaje descontracturante <span class="rev">[REVISAR]</span></h3>
+              <p class="meta">60 min · piedras calientes opcionales</p>
+            </div>
+          </div>
+          <div class="book-only">
+            <p class="label">Día</p>
+            <div class="days" id="days"></div>
+          </div>
+          <div class="book-only">
+            <p class="label">Horario</p>
+            <div class="slots" id="slots"></div>
+          </div>
+          <div class="gift-preview">
+            <div class="gift-card">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600">serena</span><span class="code">SRN-7K4Q</span></div>
+              <div><div style="font-size:13px;opacity:.85">Para Lucía, con cariño</div><div class="amt" id="gift-amt">$ 68.000</div></div>
+            </div>
+            <p class="label" style="margin:0">Monto de la gift card <span class="rev">[REVISAR]</span></p>
+            <div class="amounts" id="amounts">
+              <button class="slot" aria-pressed="false" data-amt="45000">$ 45.000</button>
+              <button class="slot" aria-pressed="true" data-amt="68000">$ 68.000</button>
+              <button class="slot" aria-pressed="false" data-amt="120000">$ 120.000</button>
+            </div>
+          </div>
+        </div>
+        <div class="booker-foot">
+          <div class="price" id="foot-price">$ 68.000<small id="foot-note">Pagás online o en el spa</small></div>
+          <button class="btn btn-ink" id="foot-btn" type="button">Reservar <span id="foot-time">vie 18:30</span> <svg class="chev"><use href="#i-chev"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" id="horarios">
+    <div class="wrap ticker-inner">
+      <span class="ticker-title"><span class="pulse"></span>Hoy en Serena</span>
+      <div class="marquee">
+        <div class="track" aria-hidden="false">
+          <div>Turnos reservados<b>38</b></div>
+          <div>Gift cards enviadas<b>12</b></div>
+          <div>Próximo turno libre<b>15:30</b></div>
+          <div>Cabinas activas<b>6 / 7</b></div>
+          <div>Circuito de aguas<b>22°–38°</b></div>
+          <div>Turnos reservados<b>38</b></div>
+          <div>Gift cards enviadas<b>12</b></div>
+          <div>Próximo turno libre<b>15:30</b></div>
+          <div>Cabinas activas<b>6 / 7</b></div>
+          <div>Circuito de aguas<b>22°–38°</b></div>
+        </div>
+      </div>
+      <span class="example-note"><span class="rev">[REVISAR]</span> datos de ejemplo</span>
+    </div>
+  </div>
+
+  <section class="block" id="tratamientos">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Todo lo que necesitás para tu momento de spa. <span>Descubrís, elegís horario y reservás o regalás, en pocos pasos.</span></h2>
+        <a class="btn btn-ink" href="#reservar">Reservar turno <svg class="chev"><use href="#i-chev"/></svg></a>
+      </div>
+      <div class="bento">
+        <article class="tile wide">
+          <div class="vis">
+            <div class="stack">
+              <div class="mini"><span class="dot"><svg><use href="#i-leaf"/></svg></span>Masaje con piedras calientes<span class="tag">90 min</span></div>
+              <div class="mini"><span class="dot"><svg><use href="#i-drop"/></svg></span>Limpieza facial profunda<span class="tag">60 min</span></div>
+              <div class="mini"><span class="dot"><svg><use href="#i-drop"/></svg></span>Circuito de aguas<span class="tag">120 min</span></div>
+            </div>
+          </div>
+          <div><h3>Descubrí tratamientos de spa y estética</h3><p>Filtrá por lo que buscás hoy: relajarte, cuidarte o hacer un regalo. Cada tratamiento muestra duración, precio y qué incluye. <span class="rev">[REVISAR] tratamientos y duraciones</span></p></div>
+        </article>
+        <article class="tile">
+          <div class="vis">
+            <div class="grid-slots">
+              <span class="off">10:00</span><span>11:30</span><span class="off">13:00</span><span>14:30</span>
+              <span class="on">16:00</span><span>17:30</span><span class="off">19:00</span><span>20:30</span>
+            </div>
+          </div>
+          <div><h3>Horarios disponibles</h3><p>Ves los turnos libres antes de reservar, sin preguntar por mensaje.</p></div>
+        </article>
+        <article class="tile" id="regalos">
+          <div class="vis"><div class="gift-card" style="width:100%;max-width:240px"><span class="code">SRN-2M9X</span><span class="amt">Día de spa</span></div></div>
+          <div><h3>Regalá una experiencia</h3><p>Elegís el tratamiento o un monto y lo enviás por WhatsApp o mail. <span class="rev">[REVISAR]</span></p></div>
+        </article>
+        <article class="tile">
+          <div class="vis">
+            <div class="phone-msg">
+              <div class="bubble">Mañana a las 16:00 tenés tu masaje en Serena. ¿Confirmás?</div>
+              <div class="bubble me">Sí, confirmo</div>
+            </div>
+          </div>
+          <div><h3>Recordatorios automáticos <span class="rev">[REVISAR]</span></h3><p>Te avisamos el día anterior y podés reprogramar desde el mensaje.</p></div>
+        </article>
+        <article class="tile">
+          <div class="vis">
+            <div class="avatars" aria-hidden="true">
+              <span style="background:var(--water)">CM</span><span style="background:var(--clay)">JR</span><span style="background:var(--stone)">AL</span><span style="background:var(--accent-soft);color:var(--accent)">+4</span>
+            </div>
+          </div>
+          <div><h3>Elegí tu terapeuta <span class="rev">[REVISAR]</span></h3><p>Conocé al equipo y reservá con quien ya te atendió.</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="precios">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Para relajarte, cuidarte o regalar. <span>Experiencias, duraciones y precios de ejemplo. <span class="rev" style="display:inline-block">[REVISAR]</span></span></h2>
+        <div class="carousel-ctrl">
+          <button class="icon-btn" id="prev" aria-label="Anterior"><svg style="transform:scaleX(-1)"><use href="#i-chev"/></svg></button>
+          <button class="icon-btn" id="next" aria-label="Siguiente"><svg><use href="#i-chev"/></svg></button>
+          <a class="btn btn-ink" href="#tratamientos">Ver todos</a>
+        </div>
+      </div>
+      <div class="rail" id="rail">
+        <article class="exp c1">
+          <div class="exp-txt">
+            <div><p class="kicker">Para dos</p><h3>Día de spa en pareja con circuito de aguas y masaje</h3></div>
+            <div class="exp-stats"><div><b>4 h</b><small>duración</small></div><div><b>$ 210K</b><small>por pareja</small></div></div>
+            <a class="exp-link" href="#reservar">Reservar <svg class="chev"><use href="#i-chev"/></svg></a>
+          </div>
+          <div class="exp-art"><canvas data-hue="water"></canvas></div>
+        </article>
+        <article class="exp c2">
+          <div class="exp-txt">
+            <div><p class="kicker">Estética</p><h3>Facial express para la pausa del almuerzo</h3></div>
+            <div class="exp-stats"><div><b>40 min</b><small>duración</small></div><div><b>$ 42K</b><small>por persona</small></div></div>
+            <a class="exp-link" href="#reservar">Reservar <svg class="chev"><use href="#i-chev"/></svg></a>
+          </div>
+          <div class="exp-art"><canvas data-hue="clay"></canvas></div>
+        </article>
+        <article class="exp c3">
+          <div class="exp-txt">
+            <div><p class="kicker">Clásico</p><h3>Masaje descontracturante con piedras calientes</h3></div>
+            <div class="exp-stats"><div><b>60 min</b><small>duración</small></div><div><b>$ 68K</b><small>por persona</small></div></div>
+            <a class="exp-link" href="#reservar">Reservar <svg class="chev"><use href="#i-chev"/></svg></a>
+          </div>
+          <div class="exp-art"><canvas data-hue="stone"></canvas></div>
+        </article>
+        <article class="exp c4">
+          <div class="exp-txt">
+            <div><p class="kicker">Para regalar</p><h3>Gift card de día completo, con fecha abierta por 6 meses</h3></div>
+            <div class="exp-stats"><div><b>6 meses</b><small>de validez</small></div><div><b>$ 120K</b><small>monto</small></div></div>
+            <a class="exp-link" href="#regalos">Regalar <svg class="chev"><use href="#i-chev"/></svg></a>
+          </div>
+          <div class="exp-art"><canvas data-hue="accent"></canvas></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Hoy, un spa. <span>Después, una red de locales en CABA y alrededores.</span></h2>
+      </div>
+      <div class="figures">
+        <div class="figure"><svg><use href="#i-check"/></svg><b>3 pasos</b><span>para reservar o regalar <span class="rev">[REVISAR]</span></span></div>
+        <div class="figure"><svg><use href="#i-clock"/></svg><b>24 / 7</b><span>reservas online, sin llamar <span class="rev">[REVISAR]</span></span></div>
+        <div class="figure"><svg><use href="#i-bell"/></svg><b>1 día antes</b><span>te llega el recordatorio <span class="rev">[REVISAR]</span></span></div>
+      </div>
+      <div class="roadmap" aria-label="Hoja de ruta">
+        <span class="step now"><i>Hoy</i>Un spa: Serena Palermo <span class="rev">[REVISAR]</span></span><span class="arrow">→</span>
+        <span class="step"><i>Después</i>Red de locales</span><span class="arrow">→</span>
+        <span class="step"><i>Más adelante</i>Plataforma para otros spas</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Lo que cuentan después de la visita. <span>Reseñas de ejemplo para el prototipo. <span class="rev" style="display:inline-block">[REVISAR]</span></span></h2>
+      </div>
+    </div>
+    <div class="reviews">
+      <div class="track" id="reviews"></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Novedades <span class="rev" style="display:inline-block">[REVISAR]</span></h2>
+        <a class="btn btn-ghost" href="#">Ver todas</a>
+      </div>
+      <div class="posts">
+        <a class="post" href="#"><div class="pmeta"><b>Temporada</b><span>29 oct 2026</span></div><h3>Llegan los rituales de primavera: exfoliación con cítricos y aceites de lavanda</h3></a>
+        <a class="post" href="#"><div class="pmeta"><b>Regalos</b><span>20 oct 2026</span></div><h3>Gift cards con fecha abierta: quien la recibe elige el día y el horario</h3></a>
+        <a class="post" href="#"><div class="pmeta"><b>Bienestar</b><span>12 oct 2026</span></div><h3>Cómo elegir entre un masaje descontracturante y uno relajante</h3></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <h2>Tu próximo respiro <em>empieza acá</em></h2>
+      <div class="row">
+        <a class="btn btn-ink" href="#reservar">Reservar turno <svg class="chev"><use href="#i-chev"/></svg></a>
+        <a class="btn btn-ghost" href="#regalos"><svg><use href="#i-gift"/></svg>Regalar una experiencia</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Serena Spa & Wellness</span>
+    <span class="addr">Palermo, CABA · lun a dom 10:00–21:00 <span class="rev">[REVISAR]</span></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var days = ["jue 29", "vie 30", "sáb 31", "dom 1", "lun 2"];
+  var slotsByDay = [
+    ["15:30", "17:00", "18:30", "20:00"],
+    ["11:00", "14:30", "16:00", "18:30", "20:00"],
+    ["10:00", "12:30", "15:00", "17:30"],
+    ["11:30", "13:00", "16:30"],
+    ["10:30", "12:00", "14:30", "17:00", "19:30"]
+  ];
+  var taken = { "0:17:00": 1, "1:14:30": 1, "2:12:30": 1, "4:12:00": 1 };
+  var state = { day: 1, slot: "18:30", mode: "reservar", amt: 68000 };
+
+  var daysEl = document.getElementById("days");
+  var slotsEl = document.getElementById("slots");
+  var footTime = document.getElementById("foot-time");
+  var footBtn = document.getElementById("foot-btn");
+  var footPrice = document.getElementById("foot-price");
+  var booker = document.getElementById("reservar");
+
+  function money(n) { return "$ " + n.toLocaleString("es-AR"); }
+
+  function renderDays() {
+    daysEl.innerHTML = "";
+    days.forEach(function (d, i) {
+      var p = d.split(" ");
+      var b = document.createElement("button");
+      b.className = "day"; b.type = "button";
+      b.setAttribute("aria-pressed", i === state.day);
+      b.innerHTML = p[0] + "<b>" + p[1] + "</b>";
+      b.onclick = function () {
+        state.day = i;
+        var free = slotsByDay[i].filter(function (s) { return !taken[i + ":" + s]; });
+        state.slot = free[0];
+        renderDays(); renderSlots(); renderFoot();
+      };
+      daysEl.appendChild(b);
+    });
+  }
+  function renderSlots() {
+    slotsEl.innerHTML = "";
+    slotsByDay[state.day].forEach(function (s) {
+      var b = document.createElement("button");
+      b.className = "slot"; b.type = "button"; b.textContent = s;
+      if (taken[state.day + ":" + s]) b.disabled = true;
+      b.setAttribute("aria-pressed", s === state.slot);
+      b.onclick = function () { state.slot = s; renderSlots(); renderFoot(); };
+      slotsEl.appendChild(b);
+    });
+  }
+  function renderFoot() {
+    if (state.mode === "reservar") {
+      footPrice.innerHTML = money(68000) + "<small>Pagás online o en el spa <span class=\"rev\">[REVISAR]</span></small>";
+      footBtn.innerHTML = "Reservar <span>" + days[state.day].split(" ")[0] + " " + state.slot + "</span> <svg class=\"chev\"><use href=\"#i-chev\"/></svg>";
+    } else {
+      footPrice.innerHTML = money(state.amt) + "<small>Válida por 6 meses <span class=\"rev\">[REVISAR]</span></small>";
+      footBtn.innerHTML = "Enviar regalo <svg class=\"chev\"><use href=\"#i-chev\"/></svg>";
+    }
+  }
+
+  document.querySelectorAll(".tabs button").forEach(function (t) {
+    t.onclick = function () {
+      state.mode = t.dataset.mode;
+      booker.dataset.mode = state.mode;
+      document.querySelectorAll(".tabs button").forEach(function (x) { x.setAttribute("aria-selected", x === t); });
+      renderFoot();
+    };
+  });
+  document.querySelectorAll("#amounts button").forEach(function (b) {
+    b.onclick = function () {
+      state.amt = +b.dataset.amt;
+      document.getElementById("gift-amt").textContent = money(state.amt);
+      document.querySelectorAll("#amounts button").forEach(function (x) { x.setAttribute("aria-pressed", x === b); });
+      renderFoot();
+    };
+  });
+  footBtn.onclick = function () {
+    footBtn.innerHTML = (state.mode === "reservar" ? "Turno reservado" : "Regalo listo para enviar") + " <svg class=\"chev\"><use href=\"#i-check\"/></svg>";
+  };
+
+  renderDays(); renderSlots(); renderFoot();
+
+  // Carrusel
+  var rail = document.getElementById("rail");
+  function step() { var c = rail.querySelector(".exp"); return c ? c.offsetWidth + 16 : 300; }
+  document.getElementById("prev").onclick = function () { rail.scrollBy({ left: -step(), behavior: "smooth" }); };
+  document.getElementById("next").onclick = function () { rail.scrollBy({ left: step(), behavior: "smooth" }); };
+
+  // Reseñas (ejemplo)
+  var reviews = [
+    ["Reservé un sábado a la noche desde el celular y el domingo ya estaba en la camilla. Cero llamadas.", "Carolina M.", "Belgrano", "var(--water)"],
+    ["Le regalé el día de spa a mi mamá por WhatsApp. Ella eligió la fecha cuando le quedó cómodo.", "Julián R.", "Caballito", "var(--clay)"],
+    ["El recordatorio del día anterior me salvó: pude pasar el turno a la tarde en dos toques.", "Ana L.", "Vicente López", "var(--stone)"],
+    ["Ver los horarios libres de verdad cambia todo. Antes mandaba mensajes y esperaba horas.", "Martina G.", "Palermo", "var(--accent-soft)"],
+    ["Fuimos en pareja al circuito de aguas. La reserva fue más fácil que pedir una pizza.", "Diego y Sol", "Núñez", "var(--water)"]
+  ];
+  var rt = document.getElementById("reviews");
+  var html = reviews.map(function (r) {
+    var ini = r[1].split(" ").map(function (w) { return w[0]; }).join("").slice(0, 2);
+    return '<article class="review"><p>“' + r[0] + '”</p><div class="who"><span class="av" style="background:' + r[3] + '">' + ini + '</span><div><b>' + r[1] + '</b><small>' + r[2] + '</small></div></div></article>';
+  }).join("");
+  rt.innerHTML = html + html.replace(/<article/g, '<article aria-hidden="true"');
+
+  // Arte generativo de las tarjetas: ondas de agua
+  function drawWaves() {
+    var css = getComputedStyle(document.documentElement);
+    document.querySelectorAll(".exp-art canvas").forEach(function (cv, k) {
+      var r = cv.getBoundingClientRect();
+      var dpr = window.devicePixelRatio || 1;
+      cv.width = r.width * dpr; cv.height = r.height * dpr;
+      var ctx = cv.getContext("2d");
+      ctx.scale(dpr, dpr);
+      var col = css.getPropertyValue("--accent").trim();
+      ctx.strokeStyle = col; ctx.lineWidth = 1;
+      for (var i = 0; i < 22; i++) {
+        ctx.globalAlpha = 0.12 + (i / 22) * 0.45;
+        ctx.beginPath();
+        for (var x = 0; x <= r.width; x += 4) {
+          var y = r.height * 0.15 + i * (r.height / 26) + Math.sin(x / (38 + k * 7) + i * 0.35 + k) * (10 + i * 0.6);
+          x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+    });
+  }
+  drawWaves();
+  window.addEventListener("resize", drawWaves);
+  if (window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", drawWaves);
+})();
+</script>
